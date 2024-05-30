@@ -43,6 +43,13 @@ public class AppDriver {
 
         char sortBy = argMap.getOrDefault("-t", "h").charAt(0);
         char algorithm = argMap.getOrDefault("-s", "b").charAt(0);
+
+		if (sortBy != 'h' && sortBy != 'v' && sortBy != 'a') {
+			System.err.println(
+					"Invalid sort type specified. Please use 'h' for height, 'v' for volume, or 'a' for base area.");
+			return;
+		}
+      
         GeometricShape[] shapes;
         try {
             shapes = readShapesFromFile(fileName);
@@ -96,7 +103,7 @@ public class AppDriver {
 
         String line;
         int index = 0;
-        while ((line = reader.readLine()) != null) { 1
+        while ((line = reader.readLine()) != null) { 
             String[] parts = line.split(" ");
             if (parts.length != 3) {
                 throw new IllegalArgumentException("Invalid line format: " + line);
