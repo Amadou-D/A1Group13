@@ -104,7 +104,45 @@ public class SortingAlgorithms {
         }
     }
     
+    
+    //Heap Sort Implementation 
     public static <T extends Comparable<T>> void customSort(T[] array) {
-    	
+        int n = array.length;
+
+        // Build Max Heap
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(array, n, i);
+        }
+
+        for (int i = n - 1; i > 0; i--) {
+            T temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+
+            heapify(array, i, 0);
+        }
     }
+
+    private static <T extends Comparable<T>> void heapify(T[] array, int n, int i) {
+        int largest = i;
+        int leftChildIdx = 2 * i + 1;
+        int rightChildIdx = 2 * i + 2;
+
+        if (leftChildIdx < n && array[leftChildIdx].compareTo(array[largest]) > 0) {
+            largest = leftChildIdx;
+        }
+
+        if (rightChildIdx < n && array[rightChildIdx].compareTo(array[largest]) > 0) {
+            largest = rightChildIdx;
+        }
+
+        if (largest != i) {
+            T swap = array[i];
+            array[i] = array[largest];
+            array[largest] = swap;
+
+            heapify(array, n, largest);
+        }
+    }
+
 }

@@ -1,0 +1,64 @@
+Heap Sort Algorithm Description:
+
+Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure to sort elements. The algorithm consists of two main phases: heap construction and heapification.
+
+Heap Construction Phase: The array is transformed into a max heap, where each parent node is greater than or equal to its children.
+
+Heapification Phase: The max heap is repeatedly transformed into a sorted array by swapping the root node (the maximum element) with the last element and restoring the max heap property.
+
+Complexity Analysis:
+
+- Time Complexity: The time complexity of Heap Sort is O(n log n) in the worst case, where n is the number of elements in the array. Both the heap construction phase and heapification phase contribute to this time complexity.
+- Space Complexity: I think the space complexity of Heap Sort is O(1) because the sorting process is performed in-place without requiring additional space.
+
+Pseudocode with Complexity Analysis:
+
+function heapSort(array):
+    n = length(array)                       // O(1): Finding the length of the array
+    
+    // Heap Construction Phase
+    for i from n/2 - 1 down to 0:           // O(n/2): Loop to build the heap
+        heapify(array, n, i)                // O(log n) per call, total O(n log n): Restoring the heap property
+    
+    // Heapification Phase
+    for i from n-1 down to 0:               // O(n): Loop to extract elements from the heap
+        swap(array[0], array[i])            // O(1): Swap the root with the last element
+        heapify(array, i, 0)                // O(log n) per call, total O(n log n): Restore the heap property
+
+function heapify(array, n, i):
+    largest = i                             // O(1): Initialize the largest as root(i)
+    left = 2*i + 1                          // O(1): Calculate the left child index
+    right = 2*i + 2                         // O(1): Calculate the right child index
+    
+    // Compare with left child
+    if left < n and array[left] > array[largest]:  // O(1) comparison: Check if left child is larger
+        largest = left                       // O(1): Update largest if left child is larger
+    
+    // Compare with right child
+    if right < n and array[right] > array[largest]: // O(1) comparison: Check if right child is larger
+        largest = right                      // O(1): Update largest if right child is larger
+    
+    // If largest is not root
+    if largest != i:                         // O(1): Check if the root is not the largest
+        swap(array[i], array[largest])       // O(1): Swap the root with the largest
+        heapify(array, n, largest)           // O(log n) recursive call: Restore the heap property
+
+Counting Analysis:
+
+- Heap Construction Phase:
+    - Loop from n/2 - 1 down to 0: Runs approximately n/2 times, hence O(n/2).
+    - Heapify calls: Each call to heapify has a time complexity of O(log n).
+    - Total Operations for Heap Construction Phase: O(n/2 * log n) = O(n log n).
+
+- Heapification Phase:
+    - Loop from n-1 down to 0: Runs n times, hence O(n).
+    - Swap operation: Each iteration includes one swap operation, which is O(1).
+    - Heapify calls: Each call to heapify has a time complexity of O(log n).
+    - Total Operations for Heapification Phase: O(n * log n).
+
+- Overall Complexity:
+    - Heap Construction Phase: O(n log n)
+    - Heapification Phase: O(n log n)
+    - Total: O(n log n) + O(n log n) = O(n log n)
+
+Therefore, the time complexity of Heap Sort is O(n log n).

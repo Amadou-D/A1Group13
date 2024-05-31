@@ -1,13 +1,10 @@
 Instructions for Installing and Using the Sorting Program Group13
 
 
-Thank you for choosing our sorting program! Follow the steps below to install and utilize the application effectively.
-
-
 Installation Instructions
 
 
-1. Unzip the provided project files (A1GroupX.zip) to your desired directory.
+1. Unzip the provided project files (A1Group13.zip) to your desired directory.
 
 2. Open Eclipse IDE.
 
@@ -26,7 +23,7 @@ Installation Instructions
    - Select Build Project.
 
 
-Usage Instructions
+Usage Instructions (Eclipse IDE)
 
 
 1. Once the project is imported and built successfully, you can run the sorting program via the command line.
@@ -35,7 +32,7 @@ Usage Instructions
 
 3. Navigate to the directory where the project files are located.
 
-4. Execute the sorting program using the following command format:
+4. Execute the sorting program using run configurations tab and then clicking "arguments" in the following command format:
    java -jar Sort.jar -f<file_name> -t<type> -s<algorithm>
    
    Replace:
@@ -49,3 +46,26 @@ Usage Instructions
 5. Press Enter to execute the command.
 
 6. The program will read the input file, sort the shapes according to the specified type and algorithm, and display the sorted results along with benchmarking information.
+
+Usage Instructions in Command Prompt (CMD)
+
+1. Open the terminal or command prompt.
+
+2. Navigate to the directory where the project files are located. You can use the `cd` command to change directories. For example:
+   cd path\to\project\directory
+
+3. Execute the sorting program using the following command format:
+   java -jar path\to\Sort.jar -f<path_to_file_name> -t<type> -s<algorithm>
+   Replace:
+   - <path_to_file_name> with the path to the input file containing shape data (e.g., C:\path\to\shapes1.txt).
+   - <type> with 'h' for height, 'v' for volume, or 'a' for base area.
+   - <algorithm> with 'b' for Bubble, 's' for Selection, 'i' for Insertion, 'm' for Merge, 'q' for Quick, or your choice of sorting algorithm ('z').
+
+   Example:
+   java -jar path\to\Sort.jar -fC:\path\to\shapes1.txt -tv -sb
+
+4. Press Enter to execute the command.
+
+5. The program will read the input file, sort the shapes according to the specified type and algorithm, and display the sorted results along with benchmarking information.
+
+

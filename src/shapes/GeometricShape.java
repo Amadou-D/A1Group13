@@ -14,11 +14,11 @@ public abstract class GeometricShape implements Comparable<GeometricShape>, Comp
 
     @Override
     public int compare(GeometricShape shape1, GeometricShape shape2) {
-        double result = shape1.getBaseArea() - shape2.getBaseArea();
+        int result = Double.compare(shape1.getBaseArea(), shape2.getBaseArea());
         if (result == 0) {
-            result = shape1.getVolume() - shape2.getVolume();
+            result = Double.compare(shape1.getVolume(), shape2.getVolume());
         }
-        return (int) result;
+        return result;
     }
     
     
