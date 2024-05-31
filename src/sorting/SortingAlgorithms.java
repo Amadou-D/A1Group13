@@ -118,30 +118,31 @@ public class SortingAlgorithms {
             T temp = array[0];
             array[0] = array[i];
             array[i] = temp;
-
+            
+            // Recursive heapify call on the reduced heap
             heapify(array, i, 0);
         }
     }
 
-    private static <T extends Comparable<T>> void heapify(T[] array, int n, int i) {
-        int largest = i;
-        int leftChildIdx = 2 * i + 1;
-        int rightChildIdx = 2 * i + 2;
+    private static <T extends Comparable<T>> void heapify(T[] array, int size, int index) {
+        int largest = index;
+        int leftChildIdx = 2 * index + 1;
+        int rightChildIdx = 2 * index + 2;
 
-        if (leftChildIdx < n && array[leftChildIdx].compareTo(array[largest]) > 0) {
+        if (leftChildIdx < size && array[leftChildIdx].compareTo(array[largest]) > 0) {
             largest = leftChildIdx;
         }
 
-        if (rightChildIdx < n && array[rightChildIdx].compareTo(array[largest]) > 0) {
+        if (rightChildIdx < size && array[rightChildIdx].compareTo(array[largest]) > 0) {
             largest = rightChildIdx;
         }
 
-        if (largest != i) {
-            T swap = array[i];
-            array[i] = array[largest];
+        if (largest != index) {
+            T swap = array[index];
+            array[index] = array[largest];
             array[largest] = swap;
 
-            heapify(array, n, largest);
+            heapify(array, size, largest);
         }
     }
 
