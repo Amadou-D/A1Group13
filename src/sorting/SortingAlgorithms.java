@@ -45,7 +45,7 @@ public class SortingAlgorithms {
             
             while (j >= 0 && array[j].compareTo(key) > 0) {
                 array[j + 1] = array[j];
-                j = j - 1;
+                j--; 
             }
             array[j + 1] = key;
         }
