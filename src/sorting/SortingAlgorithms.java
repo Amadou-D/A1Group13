@@ -8,7 +8,7 @@ public class SortingAlgorithms {
     /**
      * Bubble Sort:
      * This method is used to sort an array by repeatedly stepping through the list,
-     * comparing the elements and tempping them if they're in the wrong order.
+     * comparing the elements and swapping them if they're in the wrong order.
      * It continues this process until the list is sorted.
      * 
      * @param takes an array to be sorted
