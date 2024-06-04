@@ -142,15 +142,15 @@ public class SortingAlgorithms {
     /**
      * Quick Sort Helper:
      * This is a helper method that performs the quick sort algorithm. 
-     * It first selects a random pivot element from the array and partitions the array into two segments: 
-     * one with elements less than the pivot and another with elements greater than the pivot. 
+     * It first selects a random pivot element from the array and partitions the array into two segments,
+     * one with elements less than the pivot element and another with elements greater than the pivot element. 
      * It then recursively uses the same process for each segment until the entire array is sorted.
      * 
      * @param array the array to be sorted
      * @param start the starting index
      * @param end the ending index
      */
-    private static <T extends Comparable<T>> void quickSort(T[] array, int start, int end) {
+    public static <T extends Comparable<T>> void quickSort(T[] array, int start, int end) {
         if (start < end) {
         	
             // Choose a random pivot element and move it to the end
