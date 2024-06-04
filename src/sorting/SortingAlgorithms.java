@@ -60,6 +60,7 @@ public class SortingAlgorithms {
     
     private static <T extends Comparable<T>> void merge(T[] array, T[] left, T[] right) {
         int i = 0, j = 0, k = 0;
+        
         while (i < left.length && j < right.length) {
             if (left[i].compareTo(right[j]) <= 0) {
                 array[k++] = left[i++];
@@ -67,9 +68,11 @@ public class SortingAlgorithms {
                 array[k++] = right[j++];
             }
         }
+        
         while (i < left.length) {
             array[k++] = left[i++];
         }
+        
         while (j < right.length) {
             array[k++] = right[j++];
         }
