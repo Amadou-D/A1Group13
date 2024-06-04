@@ -108,7 +108,7 @@ public class SortingAlgorithms {
         int p1 = 0, p2 = 0, oIdx = 0;
         
         // Merge the two halves back into the original array
-        while (p1 < left.length && j < right.length) {
+        while (p1 < left.length && p2 < right.length) {
             if (left[p1].compareTo(right[p2]) <= 0) {
                 array[oIdx++] = left[p1++];
             } else {
@@ -130,7 +130,7 @@ public class SortingAlgorithms {
     /**
      * Quick Sort:
      * This method is another divide-and-conquer algorithm. It picks a "pivot" element and partitions
-     * the array into elements less than the pivot and elements greater than the pivot.
+     * the array into elements less than the pivot element and greater than the pivot element.
      * It then recursively sorts the sub-arrays.
      * 
      * @param array the array to be sorted
@@ -141,7 +141,7 @@ public class SortingAlgorithms {
 
     /**
      * Quick Sort Helper:
-     * This helper method performs the actual recursive quick sort on the array.
+     * This is a helper method that performs the partitioning and actual recursive quick sort on the array.
      * 
      * @param array the array to be sorted
      * @param start the starting index
@@ -149,7 +149,8 @@ public class SortingAlgorithms {
      */
     private static <T extends Comparable<T>> void quickSort(T[] array, int start, int end) {
         if (start < end) {
-            // Choose a random pivot and move it to the end
+        	
+            // Choose a random pivot element and move it to the end
             int pivotIndex = new Random().nextInt(end - start + 1) + start;
             T pivot = array[pivotIndex];
             array[pivotIndex] = array[end];
@@ -165,7 +166,7 @@ public class SortingAlgorithms {
                 }
             }
             
-            // Place the pivot in its correct position
+            // Place the pivot in its correct array position
             T temp = array[i];
             array[i] = array[end];
             array[end] = temp;
@@ -186,26 +187,23 @@ public class SortingAlgorithms {
     public static <T extends Comparable<T>> void customSort(T[] array) {
         int n = array.length;
 
-        // Build a max heap from the array
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(array, n, i);
         }
 
-        // Extract elements from the heap one by one
         for (int i = n - 1; i > 0; i--) {
-            // Move current root to end
-            T temp = array[0];
+
+        	T temp = array[0];
             array[0] = array[i];
             array[i] = temp;
             
-            // Call max heapify on the reduced heap
             heapify(array, i, 0);
         }
     }
 
     /**
      * Heapify:
-     * This helper method maintains the heap property for a subtree rooted at the given index.
+     * This helper method maintains the heap property for a subtree at the given index.
      * 
      * @param array the array representing the heap
      * @param size the size of the heap
@@ -216,23 +214,19 @@ public class SortingAlgorithms {
         int leftChildIdx = 2 * index + 1;
         int rightChildIdx = 2 * index + 2;
 
-        // If the left child is larger than the root
         if (leftChildIdx < size && array[leftChildIdx].compareTo(array[largest]) > 0) {
             largest = leftChildIdx;
         }
 
-        // If the right child is larger than the largest so far
         if (rightChildIdx < size && array[rightChildIdx].compareTo(array[largest]) > 0) {
             largest = rightChildIdx;
         }
 
-        // If the largest is not the root
         if (largest != index) {
             T swap = array[index];
             array[index] = array[largest];
             array[largest] = swap;
 
-            // Recursively heapify the affected subtree
             heapify(array, size, largest);
         }
     }
