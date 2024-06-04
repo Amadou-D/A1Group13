@@ -78,7 +78,7 @@ public class SortingAlgorithms {
 
     /**
      * Merge Sort:
-     * This is a divide-and-conquer algorithm that splits the array into sub arrays,
+     * This is a divide-and-conquer algorithm that splits the input array into sub arrays,
      * recursively sorts each half, and then uses the merge method to merge the sorted halves back together.
      * 
      * @param takes an array to be sorted
@@ -116,12 +116,12 @@ public class SortingAlgorithms {
             }
         }
         
-        // Copy any remaining elements from the left half
+        
+        // Copy the remaining elements of left and right into the original array
         while (p1 < left.length) {
             array[oIdx++] = left[p1++];
         }
         
-        // Copy any remaining elements from the right half
         while (p2 < right.length) {
             array[oIdx++] = right[p2++];
         }
@@ -129,7 +129,7 @@ public class SortingAlgorithms {
 
     /**
      * Quick Sort:
-     * This method is another divide-and-conquer algorithm. It picks a "pivot" element and partitions
+     * This method picks a "pivot" element and partitions it
      * the array into elements less than the pivot element and greater than the pivot element.
      * It then recursively sorts the sub-arrays.
      * 
