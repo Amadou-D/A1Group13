@@ -84,7 +84,7 @@ public class SortingAlgorithms {
      * @param takes an array to be sorted
      */
     public static <T extends Comparable<T>> void mergeSort(T[] array) {
-        if (array.length <= 1) {
+        if (array.length == 1) {
             return;
         }
         
@@ -129,7 +129,7 @@ public class SortingAlgorithms {
 
     /**
      * Quick Sort:
-     * This method picks a "pivot" element and partitions it
+     * This method picks a "pivot" element and partitions 
      * the array into elements less than the pivot element and greater than the pivot element.
      * It then recursively sorts the sub-arrays.
      * 
@@ -141,7 +141,10 @@ public class SortingAlgorithms {
 
     /**
      * Quick Sort Helper:
-     * This is a helper method that performs the partitioning and actual recursive quick sort on the array.
+     * This is a helper method that performs the quick sort algorithm. 
+     * It first selects a random pivot element from the array and partitions the array into two segments: 
+     * one with elements less than the pivot and another with elements greater than the pivot. 
+     * It then recursively uses the same process for each segment until the entire array is sorted.
      * 
      * @param array the array to be sorted
      * @param start the starting index
@@ -180,7 +183,7 @@ public class SortingAlgorithms {
     /**
      * Heap Sort:
      * This method sorts an array by turning it into a max heap, then repeatedly
-     * extracting the maximum element and rebuilding the heap with the remaining elements.
+     * extracting the max element and rebuilding the heap with the remaining elements.
      * 
      * @param array the array to be sorted
      */
