@@ -1,26 +1,35 @@
 package sorting;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 public class SortingAlgorithms {
+	
+	/**
+	 * Bubble Sort:
+	 * This method is used to sort an array by repeatedly stepping through the list,
+	 * comparing the elements and swapping them if they're in the wrong order.
+	 * It continues this process until the list is sorted.
+	 *
+	 * @param array      the array to be sorted
+	 * @param comparator the comparator to use for comparing elements
+	 * @param sortBy     the type of comparison: 'h' for height, 'v' for volume, 'a' for base area
+	 */
 
-    /**
-     * Bubble Sort:
-     * This method is used to sort an array by repeatedly stepping through the list,
-     * comparing the elements and swapping them if they're in the wrong order.
-     * It continues this process until the list is sorted.
-     * 
-     * @param takes an array to be sorted
-     */
-    public static <T extends Comparable<T>> void bubbleSort(T[] array) {
+    public static <T extends Comparable<T>> void bubbleSort(T[] array, Comparator<T> comparator, char sortBy) {
         int n = array.length;
-        
+
         for (int i = 0; i < n - 1; i++) {
-        	
             for (int j = 0; j < n - i - 1; j++) {
-            	
-                if (array[j].compareTo(array[j + 1]) > 0) {
+                int comparisonResult = 0;
+                if (sortBy == 'h') {
+                    comparisonResult = array[j].compareTo(array[j + 1]);
+                } else if (sortBy == 'v' || sortBy == 'a') {
+                    comparisonResult = comparator.compare(array[j], array[j + 1]);
+                }
+
+                if (comparisonResult > 0) {
                     T temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
@@ -36,14 +45,14 @@ public class SortingAlgorithms {
      * 
      * @param takes an array to be sorted
      */
-    public static <T extends Comparable<T>> void insertionSort(T[] array) {
+    public static <T extends Comparable<T>> void insertionSort(T[] array, Comparator<T> comparator, char sortBy) {
         int n = array.length;
-        
+
         for (int i = 1; i < n; i++) {
             T key = array[i];
             int j = i - 1;
-            
-            while (j >= 0 && array[j].compareTo(key) > 0) {
+
+            while (j >= 0 && (sortBy == 'h' ? array[j].compareTo(key) > 0 : comparator.compare(array[j], key) > 0)) {
                 array[j + 1] = array[j];
                 j--;
             }
@@ -58,18 +67,17 @@ public class SortingAlgorithms {
      * 
      * @param takes an array to be sorted
      */
-    public static <T extends Comparable<T>> void selectionSort(T[] array) {
+    public static <T extends Comparable<T>> void selectionSort(T[] array, Comparator<T> comparator, char sortBy) {
         int n = array.length;
-        
+
         for (int i = 0; i < n - 1; i++) {
-        	
             int minIdx = i;
             for (int j = i + 1; j < n; j++) {
-                if (array[j].compareTo(array[minIdx]) < 0) {
+                if (sortBy == 'h' ? array[j].compareTo(array[minIdx]) < 0 : comparator.compare(array[j], array[minIdx]) < 0) {
                     minIdx = j;
                 }
             }
-            
+
             T temp = array[minIdx];
             array[minIdx] = array[i];
             array[i] = temp;
@@ -83,19 +91,19 @@ public class SortingAlgorithms {
      * 
      * @param takes an array to be sorted
      */
-    public static <T extends Comparable<T>> void mergeSort(T[] array) {
+    public static <T extends Comparable<T>> void mergeSort(T[] array, Comparator<T> comparator, char sortBy) {
         if (array.length == 1) {
             return;
         }
-        
+
         int mid = array.length / 2;
         T[] left = Arrays.copyOfRange(array, 0, mid);
         T[] right = Arrays.copyOfRange(array, mid, array.length);
-        mergeSort(left);
-        mergeSort(right);
-        merge(array, left, right);
+        mergeSort(left, comparator, sortBy);
+        mergeSort(right, comparator, sortBy);
+        merge(array, left, right, comparator, sortBy);
     }
-    
+
     /**
      * Merge Method: 
      * This helper method merges two arrays into one sorted array.
@@ -104,24 +112,22 @@ public class SortingAlgorithms {
      * @param takes the left half of the array
      * @param takes the right half of the array
      */
-    private static <T extends Comparable<T>> void merge(T[] array, T[] left, T[] right) {
+    private static <T extends Comparable<T>> void merge(T[] array, T[] left, T[] right, Comparator<T> comparator, char sortBy) {
         int p1 = 0, p2 = 0, oIdx = 0;
-        
-        // Merge the two halves back into the original array
+
         while (p1 < left.length && p2 < right.length) {
-            if (left[p1].compareTo(right[p2]) <= 0) {
+            int comparisonResult = comparator.compare(left[p1], right[p2]);
+            if (sortBy == 'h' ? left[p1].compareTo(right[p2]) <= 0 : comparisonResult <= 0) {
                 array[oIdx++] = left[p1++];
             } else {
                 array[oIdx++] = right[p2++];
             }
         }
-        
-        
-        // Copy the remaining elements of left and right into the original array
+
         while (p1 < left.length) {
             array[oIdx++] = left[p1++];
         }
-        
+
         while (p2 < right.length) {
             array[oIdx++] = right[p2++];
         }
@@ -135,8 +141,8 @@ public class SortingAlgorithms {
      * 
      * @param array the array to be sorted
      */
-    public static <T extends Comparable<T>> void quickSort(T[] array) {
-        quickSort(array, 0, array.length - 1);
+    public static <T extends Comparable<T>> void quickSort(T[] array, Comparator<T> comparator, char sortBy) {
+        quickSort(array, 0, array.length - 1, comparator, sortBy);
     }
 
     /**
@@ -150,10 +156,8 @@ public class SortingAlgorithms {
      * @param start the starting index
      * @param end the ending index
      */
-    public static <T extends Comparable<T>> void quickSort(T[] array, int start, int end) {
+    private static <T extends Comparable<T>> void quickSort(T[] array, int start, int end, Comparator<T> comparator, char sortBy) {
         if (start < end) {
-        	
-            // Choose a random pivot element and move it to the end
             int pivotIndex = new Random().nextInt(end - start + 1) + start;
             T pivot = array[pivotIndex];
             array[pivotIndex] = array[end];
@@ -161,46 +165,43 @@ public class SortingAlgorithms {
 
             int i = start;
             for (int j = start; j < end; j++) {
-                if (array[j].compareTo(pivot) < 0) {
+                int comparisonResult = comparator.compare(array[j], pivot);
+                if (sortBy == 'h' ? array[j].compareTo(pivot) < 0 : comparisonResult < 0) {
                     T temp = array[i];
                     array[i] = array[j];
                     array[j] = temp;
                     i++;
                 }
             }
-            
-            // Place the pivot in its correct array position
+
             T temp = array[i];
             array[i] = array[end];
             array[end] = temp;
 
-            // Recursively sort the left and right parts
-            quickSort(array, start, i - 1);
-            quickSort(array, i + 1, end);
+            quickSort(array, start, i - 1, comparator, sortBy);
+            quickSort(array, i + 1, end, comparator, sortBy);
         }
     }
-
     /**
-     * Heap Sort:
+     * Custom Sorting Algorithm Max Heap Sort:
      * This method sorts an array by turning it into a max heap, then repeatedly
      * extracting the max element and rebuilding the heap with the remaining elements.
      * 
      * @param array the array to be sorted
      */
-    public static <T extends Comparable<T>> void customSort(T[] array) {
+    public static <T extends Comparable<T>> void customSort(T[] array, Comparator<T> comparator, char sortBy) {
         int n = array.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(array, n, i);
+            heapify(array, n, i, comparator, sortBy);
         }
 
         for (int i = n - 1; i > 0; i--) {
-
-        	T temp = array[0];
+            T temp = array[0];
             array[0] = array[i];
             array[i] = temp;
-            
-            heapify(array, i, 0);
+
+            heapify(array, i, 0, comparator, sortBy);
         }
     }
 
@@ -212,16 +213,16 @@ public class SortingAlgorithms {
      * @param size the size of the heap
      * @param index the root index of the subtree
      */
-    private static <T extends Comparable<T>> void heapify(T[] array, int size, int index) {
+    private static <T extends Comparable<T>> void heapify(T[] array, int size, int index, Comparator<T> comparator, char sortBy) {
         int largest = index;
         int leftChildIdx = 2 * index + 1;
         int rightChildIdx = 2 * index + 2;
 
-        if (leftChildIdx < size && array[leftChildIdx].compareTo(array[largest]) > 0) {
+        if (leftChildIdx < size && (sortBy == 'h' ? array[leftChildIdx].compareTo(array[largest]) > 0 : comparator.compare(array[leftChildIdx], array[largest]) > 0)) {
             largest = leftChildIdx;
         }
 
-        if (rightChildIdx < size && array[rightChildIdx].compareTo(array[largest]) > 0) {
+        if (rightChildIdx < size && (sortBy == 'h' ? array[rightChildIdx].compareTo(array[largest]) > 0 : comparator.compare(array[rightChildIdx], array[largest]) > 0)) {
             largest = rightChildIdx;
         }
 
@@ -230,7 +231,7 @@ public class SortingAlgorithms {
             array[index] = array[largest];
             array[largest] = temp;
 
-            heapify(array, size, largest);
+            heapify(array, size, largest, comparator, sortBy);
         }
     }
 }

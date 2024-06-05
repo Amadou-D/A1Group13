@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,12 +45,12 @@ public class AppDriver {
         char sortBy = argMap.getOrDefault("-t", "h").charAt(0);
         char algorithm = argMap.getOrDefault("-s", "b").charAt(0);
 
-		if (sortBy != 'h' && sortBy != 'v' && sortBy != 'a') {
-			System.err.println(
-					"Invalid sort type specified. Please use 'h' for height, 'v' for volume, or 'a' for base area.");
-			return;
-		}
-      
+        if (sortBy != 'h' && sortBy != 'v' && sortBy != 'a') {
+            System.err.println(
+                    "Invalid sort type specified. Please use 'h' for height, 'v' for volume, or 'a' for base area.");
+            return;
+        }
+
         GeometricShape[] shapes;
         try {
             shapes = readShapesFromFile(fileName);
@@ -59,24 +60,43 @@ public class AppDriver {
         }
 
         long startTime = System.nanoTime();
+        Comparator<GeometricShape> comparator = null;
+        switch (sortBy) {
+            case 'v':
+                comparator = Comparator.comparing(GeometricShape::getVolume);
+                break;
+            case 'a':
+                comparator = Comparator.comparingDouble(GeometricShape::getBaseArea);
+                break;
+            case 'h': // Handle sorting by height using Comparable interface
+                if (!(shapes[0] instanceof Comparable)) {
+                    System.err.println("Shapes do not implement Comparable interface for sorting by height.");
+                    return;
+                }
+                break;
+            default:
+                System.err.println("Invalid sorting type specified.");
+                return;
+        }
+
         switch (algorithm) {
             case 'b':
-                SortingAlgorithms.bubbleSort(shapes);
+                SortingAlgorithms.bubbleSort(shapes, comparator, sortBy);
                 break;
             case 'i':
-                SortingAlgorithms.insertionSort(shapes);
+                SortingAlgorithms.insertionSort(shapes, comparator, sortBy);
                 break;
             case 's':
-                SortingAlgorithms.selectionSort(shapes);
+                SortingAlgorithms.selectionSort(shapes, comparator, sortBy);
                 break;
             case 'm':
-                SortingAlgorithms.mergeSort(shapes);
+                SortingAlgorithms.mergeSort(shapes, comparator, sortBy);
                 break;
             case 'q':
-                SortingAlgorithms.quickSort(shapes);
+                SortingAlgorithms.quickSort(shapes, comparator, sortBy);
                 break;
             case 'z':
-                SortingAlgorithms.customSort(shapes);
+                SortingAlgorithms.customSort(shapes, comparator, sortBy);
                 break;
             default:
                 System.err.println("Invalid sorting algorithm specified.");
@@ -86,11 +106,10 @@ public class AppDriver {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
 
-        
         for (int i = 1000; i < shapes.length; i += 1000) {
             System.out.println("Shape at position " + i + ": " + shapes[i]);
         }
-        
+
         System.out.println("Sorting completed in: " + duration + " milliseconds.");
         System.out.println("First sorted value: " + shapes[0]);
         System.out.println("Last sorted value: " + shapes[shapes.length - 1]);
@@ -103,7 +122,7 @@ public class AppDriver {
 
         String line;
         int index = 0;
-        while ((line = reader.readLine()) != null) { 
+        while ((line = reader.readLine()) != null) {
             String[] parts = line.split(" ");
             if (parts.length != 3) {
                 throw new IllegalArgumentException("Invalid line format: " + line);
