@@ -92,16 +92,14 @@ public class SortingAlgorithms {
      * @param takes an array to be sorted
      */
     public static <T extends Comparable<T>> void mergeSort(T[] array, Comparator<T> comparator, char sortBy) {
-        if (array.length == 1) {
-            return;
+        if (array.length > 1) {
+            int mid = array.length / 2;
+            T[] left = Arrays.copyOfRange(array, 0, mid);
+            T[] right = Arrays.copyOfRange(array, mid, array.length);
+            mergeSort(left, comparator, sortBy);
+            mergeSort(right, comparator, sortBy);
+            merge(array, left, right, comparator, sortBy);
         }
-
-        int mid = array.length / 2;
-        T[] left = Arrays.copyOfRange(array, 0, mid);
-        T[] right = Arrays.copyOfRange(array, mid, array.length);
-        mergeSort(left, comparator, sortBy);
-        mergeSort(right, comparator, sortBy);
-        merge(array, left, right, comparator, sortBy);
     }
 
     /**
@@ -132,7 +130,7 @@ public class SortingAlgorithms {
             array[oIdx++] = right[p2++];
         }
     }
-
+    
     /**
      * Quick Sort:
      * This method picks a "pivot" element and partitions 
@@ -182,6 +180,7 @@ public class SortingAlgorithms {
             quickSort(array, i + 1, end, comparator, sortBy);
         }
     }
+    
     /**
      * Custom Sorting Algorithm Max Heap Sort:
      * This method sorts an array by turning it into a max heap, then repeatedly

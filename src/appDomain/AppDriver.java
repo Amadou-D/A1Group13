@@ -73,6 +73,7 @@ public class AppDriver {
                     System.err.println("Shapes do not implement Comparable interface for sorting by height.");
                     return;
                 }
+                comparator = Comparator.naturalOrder();
                 break;
             default:
                 System.err.println("Invalid sorting type specified.");
