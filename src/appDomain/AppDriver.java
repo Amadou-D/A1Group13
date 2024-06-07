@@ -12,8 +12,66 @@ import java.util.Map;
 import shapes.GeometricShape;
 import sorting.SortingAlgorithms;
 
+/**
+ * The following program was created by group 13: Kyle Simons, Amadou Diallo, and Ricky Asuncion
+ * for Object-Oriented Programming 3 (CPRG-304-B) with professor Prashant Sharma at SAIT.
+ * 
+ * The AppDriver class is the entry point for running the sorting application.
+ *
+ * Problem Statement:
+ * The goal is to create an application that reads a file of random shapes,
+ * sorts them using various sorting algorithms, and benchmarks the performance
+ * of each algorithm. The shapes should be manipulated as elements of a collection,
+ * and the sorting should be done based on user-specified criteria.
+ *
+ * Solution:
+ * 1. Implement an abstract Shape class representing a three-dimensional geometric shape.
+ *    Each shape subclass (e.g., Cylinder, Cone, Pyramid, Prisms) calculates its volume
+ *    and base area.
+ *
+ * 2. Implement Comparable interface in the Shape class to compare shapes by height.
+ *    Implement a Comparator to compare shapes by base area and volume.
+ *
+ * 3. Create a utility class Sorter with different sorting algorithms (Bubble, Selection,
+ *    Insertion, Merge, Quick, and Heap Sort) that work on arrays of Comparable elements
+ *    or elements with a provided Comparator.
+ *
+ * 4. The AppDriver class reads command-line arguments to determine the input file,
+ *    sorting criteria, and sorting algorithm. It reads shapes from the file, sorts
+ *    them according to the specified algorithm, and prints benchmarking information.
+ *    
+ * Disclosure:
+ * ChatGPT was used to help generate the mergeSort compare() and compareTo().
+ *
+ * Moving Parts:
+ * - Shape class: Abstract base class for shapes with methods to calculate volume and base area.
+ * - Shape subclasses: Specific shapes (Cylinder, Cone, Pyramid, various Prisms) that implement
+ *   the abstract methods from Shape.
+ * - Sorter class: Contains static methods for various sorting algorithms.
+ * - AppDriver class: Reads input, initializes shapes, and sorts them using the Sorter methods.
+ *
+ * Use of Test Files:
+ * - shapes1.txt, shapes2.txt, shapes3.txt: Input files containing random shapes.
+ *   Each file's first line contains the number of shapes, followed by lines with
+ *   the shape type, height, and other dimensions.
+ *
+ * Testing:
+ * - The application reads a specified input file, sorts the shapes using the selected algorithm,
+ *   and prints the time taken for sorting.
+ * - Displays the first, last, and every thousandth sorted shape.
+ *
+ * Command-line Usage:
+ * - java -jar Sort.jar -f<file_name> -t<sort_type> -s<sort_algorithm>
+ *   - -f or -F: Specifies the input file (e.g., shapes1.txt).
+ *   - -t or -T: Specifies the sorting type (h for height, v for volume, a for base area).
+ *   - -s or -S: Specifies the sorting algorithm (b for bubble, s for selection, i for insertion,
+ *     m for merge, q for quick, z for heap).
+ *
+ * Example:
+ * - java -jar Sort.jar -fshapes1.txt -tv -sb
+ * - java -jar Sort.jar -fshapes2.txt -th -sh
+ */
 public class AppDriver {
-
     public static void main(String[] args) {
         Map<String, String> argMap = new HashMap<>();
 
